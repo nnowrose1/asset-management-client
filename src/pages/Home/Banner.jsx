@@ -1,11 +1,11 @@
 import React from 'react';
 
-const AuthLayout = () => {
+const Banner = () => {
     return (
         <div>
-            AUth
+            banner
         </div>
     );
 };
 
-export default AuthLayout;
+export default Banner;

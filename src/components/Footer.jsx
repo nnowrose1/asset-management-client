@@ -1,11 +1,65 @@
-import React from 'react';
+import React from "react";
+import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import Logo from "./Logo";
+import { Link } from "react-router";
 
 const Footer = () => {
-    return (
+  return (
+    <footer className="bg-gray-800 text-gray-300 pt-12 mb-6 mt-10">
+
+      {/* Main Footer Grid */}
+      <div className="container mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+
+        {/* Brand */}
         <div>
-            Footer
+          <Link to='/'><Logo></Logo></Link>
+          
+          <p className="mt-3 text-sm text-gray-400 leading-6">
+            A smart and efficient HR & Asset Management platform for modern businesses.
+          </p>
         </div>
-    );
+
+        {/* Contact */}
+        <div>
+          <h3 className="text-lg font-semibold text-white">Contact</h3>
+          <ul className="mt-3 space-y-1 text-sm">
+            <li>Email: support@assetnexus.com</li>
+            <li>Phone: +8801234-567891</li>
+          </ul>
+        </div>
+
+        {/* Quick Links */}
+        <div>
+          <h3 className="text-lg font-semibold text-white">Quick Links</h3>
+          <ul className="mt-3 space-y-2 text-sm">
+            <li><a href="/dashboard" className="hover:text-white">Dashboard</a></li>
+            <li><a href="/assets" className="hover:text-white">Assets</a></li>
+            <li><a href="/employees" className="hover:text-white">Employees</a></li>
+            <li><a href="/requests" className="hover:text-white">Requests</a></li>
+          </ul>
+        </div>
+
+        {/* Social Icons */}
+        <div>
+          <h3 className="text-lg font-semibold text-white">Follow Us</h3>
+          <div className="flex space-x-4 mt-4 text-xl">
+            <a href="#" className="hover:text-white"><FaFacebookF /></a>
+            <a href="#" className="hover:text-white"><FaLinkedinIn /></a>
+            <a href="#" className="hover:text-white"><FaTwitter /></a>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Bottom Copyright */}
+      <div className="text-center bg-gray-900 py-6 text-sm text-gray-400 mt-10 border-t border-gray-700 ">
+        © {new Date().getFullYear()} AssetVerse — All rights reserved.
+      </div>
+
+    </footer>
+  );
 };
 
 export default Footer;
+
+

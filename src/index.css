@@ -9,8 +9,14 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: #CAEB66;
-  --color-secondary: #03373D;
+  --color-primary: #1E88E5;
+  --color-secondary: #424242;
+  --color-accent: #757575;
+}
+
+nav a.active{
+  text-decoration: underline;
+  color: #1E88E5
 }
 
 body{
