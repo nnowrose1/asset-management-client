@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 const Login = () => {
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -20,6 +21,7 @@ const Login = () => {
     signInUser(data.email, data.password)
       .then(() => {
         // console.log(res.user);
+        reset();
         navigate(location?.state || "/");
       })
       .catch((err) => {

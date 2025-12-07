@@ -19,6 +19,7 @@ const HRRegister = () => {
     register,
     formState: { errors },
     handleSubmit,
+    reset
   } = useForm();
   const { registerUser, updateUserProfile } = useAuth();
   const axiosSecure = useAxiosSecure();
@@ -35,6 +36,7 @@ const HRRegister = () => {
       .then(() => {
         // console.log(result.user);
         toast.success("Registration Successful!");
+        reset();
         const formData = new FormData();
         formData.append("image", profileImg);
          // send the photo to store and get the url

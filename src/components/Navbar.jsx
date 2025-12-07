@@ -41,11 +41,11 @@ const Navbar = () => {
         <NavLink to="/hrRegister">Join as HR Manager</NavLink>
       </li>
 
-      {/* {
+      {
     user && <>
-    <li><NavLink to="/dashboard/myParcels">My Parcels</NavLink></li>
+    <li><NavLink to="/dashboard/profile">My Profile</NavLink></li>
      </>
-  } */}
+  }
     </>
   );
 

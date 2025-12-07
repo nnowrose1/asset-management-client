@@ -15,7 +15,7 @@ const Packages = () => {
   });
 
   return (
-    <div className="py-16">
+    <div className="py-16 px-6 md:px-20">
       <div className="px-4 text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-2">
           Choose Your Plan
@@ -24,7 +24,7 @@ const Packages = () => {
           Flexible pricing for businesses of all sizes.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {packages.map((pkg, index) => (
             <div
               key={index}
@@ -36,7 +36,7 @@ const Packages = () => {
 
               <p className="text-accent mt-2">
                 Up to{" "}
-                <span className="font-bold text-gray-700">
+                <span className="font-bold text-primary">
                   {pkg.employeeLimit}
                 </span>{" "}
                 employees

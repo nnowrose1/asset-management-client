@@ -6,6 +6,10 @@ import EmployeeRegister from "../pages/auth/EmployeeRegister";
 import Login from "../pages/auth/Login";
 import HRRegister from "../pages/auth/HRRegister";
 import ErrorPage from "../pages/ErrorPage";
+import DashboardLayout from "../layouts/DashboardLayout";
+import AddAsset from "../pages/dashboard/hr/AddAsset";
+import PrivateRoute from "./PrivateRoute";
+import HRRoute from "./HRRoute";
 
 export const router = createBrowserRouter([
   {
@@ -35,4 +39,24 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/dashboard',
+    element: <PrivateRoute>
+      <DashboardLayout></DashboardLayout>
+      </PrivateRoute> ,
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
+      // HR only routes
+      {
+        path: 'addAsset',
+        element: <HRRoute>
+        <AddAsset></AddAsset>
+        </HRRoute>
+      },
+      {
+        path:'profile',
+        
+      }
+    ]
+  }
 ]);

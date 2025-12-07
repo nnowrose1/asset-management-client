@@ -14,6 +14,7 @@ const EmployeeRegister = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -36,6 +37,7 @@ const EmployeeRegister = () => {
       .then(() => {
         // console.log(result.user);
         toast.success("Registration Successful!");
+        reset();
         updateUserProfile(profile)
         .then(() => {
             console.log("updated!");
