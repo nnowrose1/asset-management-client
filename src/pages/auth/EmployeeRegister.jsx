@@ -4,9 +4,11 @@ import { FaCalendar, FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../customHooks/useAuth";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../customHooks/useAxiosSecure";
 
 const EmployeeRegister = () => {
     const { registerUser, updateUserProfile } = useAuth();
+    const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
   const {
@@ -18,21 +20,35 @@ const EmployeeRegister = () => {
   const handleEmployeeRegistration = (data) => {
     console.log(data);
     const profile = {
-        displayName: data.name
+        displayName: data.name,
+        photoURL: data.photo
+    }
+
+    const employeeInfo = {
+      name: data.name,
+      email: data.email,
+      dateOfBirth: data.dateOfBirth,
+       profileImage: data.photo,
+      role: "employee",
     }
      // register
     registerUser(data.email, data.password)
-      .then((result) => {
-        console.log(result.user);
+      .then(() => {
+        // console.log(result.user);
         toast.success("Registration Successful!");
         updateUserProfile(profile)
         .then(() => {
             console.log("updated!");
-            
+            axiosSecure.post('/users', employeeInfo)
+            .then(() => {
+              console.log("Employee info posted");  
+            })
+            .catch(err => {
+              console.log(err.message);             
+            })
         })
         .catch(err => {
-            console.log(err.message);
-            
+            console.log(err.message);           
         })
         navigate(location?.state || '/');
       })
@@ -70,6 +86,22 @@ const EmployeeRegister = () => {
             />
             {errors.name && (
               <p className="text-red-600 text-sm">Full name is required</p>
+            )}
+          </div>
+
+           {/* Photo */}
+          <div className="flex flex-col space-y-1">
+            <label className="font-medium text-secondary flex items-center gap-2">
+              <FaUser /> Photo URL
+            </label>
+            <input
+              {...register("photo", { required: true })}
+              type="text"
+              placeholder="Photo URL"
+              className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
+            />
+            {errors.photo && (
+              <p className="text-red-600 text-sm">Your Photo is required</p>
             )}
           </div>
 

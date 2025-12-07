@@ -5,9 +5,11 @@ import { Link, NavLink } from "react-router";
 import Logo from "./Logo";
 import { FiLogOut, FiSettings, FiUser } from "react-icons/fi";
 import useAuth from "../customHooks/useAuth";
+import useRole from "../customHooks/useRole";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+  const {role} = useRole();
   const [hover, setHover] = useState(false);
 
   const handleLogout = () => {

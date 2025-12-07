@@ -12,6 +12,7 @@ import useAuth from "../../customHooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import axios from "axios";
+import useAxiosSecure from '../../customHooks/useAxiosSecure';
 
 const HRRegister = () => {
   const {
@@ -20,18 +21,19 @@ const HRRegister = () => {
     handleSubmit,
   } = useForm();
   const { registerUser, updateUserProfile } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleHRRegistration = (data) => {
-    console.log(data);
+    // console.log(data);
    
-    const profileImg = data.image[0];
+    const profileImg = data.companyLogo[0];
 
     // register
     registerUser(data.email, data.password)
-      .then((result) => {
-        console.log(result.user);
+      .then(() => {
+        // console.log(result.user);
         toast.success("Registration Successful!");
         const formData = new FormData();
         formData.append("image", profileImg);
@@ -39,16 +41,39 @@ const HRRegister = () => {
   const imgAPIUrl = `https://api.imgbb.com/1/upload?key=${
         import.meta.env.VITE_IMAGEHOST }`;
         axios.post(imgAPIUrl, formData).then((res) => {
-      console.log("after img upload", res.data.data.url);
+      // console.log("after img upload", res.data.data.url);
           // update user profile to firebase
  const profile = {
       displayName: data.name,
       photoURL: res.data.data.url
     }
+
+    const hrInfo = {
+      name: data.name,
+      email: data.email,
+      companyName: data.companyName,
+      companyLogo: res.data.data.url,
+      dateOfBirth: data.dateOfBirth,
+      role: "hr",
+      packageLimit: 5,
+      currentEmployees: 0,
+      subscription: "basic"
+    }
+    // console.log(hrInfo);
+    
        
         updateUserProfile(profile)
         .then(() => {
-          console.log("Profile Updated Successfully");  
+          console.log("Profile Updated Successfully"); 
+           axiosSecure.post('/users', hrInfo)
+           .then(() => {
+            console.log("HR info posted successfully");
+            
+           })
+           .catch(err => {
+            console.log(err.message);
+            
+           })
           navigate(location.state || '/');
         })
         .catch(err => {
@@ -115,11 +140,11 @@ const HRRegister = () => {
             <label className="font-medium text-secondary flex items-center gap-2">Logo</label>
           <input
             type="file"
-            {...register("image", { required: true })}
+            {...register("companyLogo", { required: true })}
             className="file-input"
             placeholder="Upload Company Logo"
           />
-          {errors.image?.type === "required" && (
+          {errors.companyLogo?.type === "required" && (
         <p className="text-red-600 text-sm">Company Logo is required</p>
           )}
 
