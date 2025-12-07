@@ -28,7 +28,7 @@ const EmployeeRegister = () => {
       name: data.name,
       email: data.email,
       dateOfBirth: data.dateOfBirth,
-       profileImage: data.photo,
+       photoURL: data.photo,
       role: "employee",
     }
      // register

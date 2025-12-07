@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 
 import Logo from "./Logo";
 import { FiLogOut, FiSettings, FiUser } from "react-icons/fi";
 import useAuth from "../customHooks/useAuth";
 import useRole from "../customHooks/useRole";
+import Loader from '../components/Loader';
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
-  const {role} = useRole();
+  const { role, isLoading } = useRole();
+  // console.log(role);
+  const navigate = useNavigate();
+
   const [hover, setHover] = useState(false);
 
   const handleLogout = () => {
     logOut()
       .then(() => {
         // console.log(res.user);
+        navigate('/login')
       })
       .catch((err) => {
         console.log(err.message);
@@ -43,6 +48,10 @@ const Navbar = () => {
   } */}
     </>
   );
+
+  if(isLoading){
+    return <Loader></Loader>
+  }
   return (
     <nav className="navbar bg-gray-700 text-white sticky top-0 z-50  backdrop-blur-xl shadow">
       <div className="navbar-start">
@@ -82,8 +91,7 @@ const Navbar = () => {
 
       <div className="navbar-end flex items-center">
         {user ? (
-          <div 
-          tabIndex={0} className="dropdown dropdown-end relative">
+          <div tabIndex={0} className="dropdown dropdown-end relative group">
             {/* Profile Button */}
             <div
               // tabIndex={0}
@@ -101,17 +109,17 @@ const Navbar = () => {
 
               {/* Smooth Fade-In Name on Hover */}
               <span
-                className={`text-secondary font-medium text-sm transition-all duration-300 
+                className={`text-secondary font-medium text-sm transition-all duration-500 
           ${hover ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
               >
                 {user?.displayName}
               </span>
             </div>
 
-            {/* DROPDOWN MENU */}
-           <ul
-  // tabIndex={0}
-  className="
+            {role === "hr" ? (
+              <ul
+                // tabIndex={0}
+                className="
       dropdown-content menu bg-white text-secondary rounded-xl shadow-lg w-48 mt-3 py-3
 
       transform transition-all duration-300 origin-top 
@@ -121,38 +129,79 @@ const Navbar = () => {
       group-focus-within:translate-y-0
       group-focus-within:pointer-events-auto
     "
->
-              <li>
-                <Link className="flex items-center gap-2">
-                  <FiUser /> Profile
-                </Link>
-              </li>
+              >
+                <li>
+                  <Link className="flex items-center gap-2">
+                    <FiUser /> Profile
+                  </Link>
+                </li>
 
-              <li>
-                <Link className="flex items-center gap-2">Asset List</Link>
-              </li>
+                <li>
+                  <Link className="flex items-center gap-2">Asset List</Link>
+                </li>
 
-              <li>
-                <Link className="flex items-center gap-2">Add Asset</Link>
-              </li>
+                <li>
+                  <Link className="flex items-center gap-2">Add Asset</Link>
+                </li>
 
-              <li>
-                <Link className="flex items-center gap-2">All Requests</Link>
-              </li>
+                <li>
+                  <Link className="flex items-center gap-2">All Requests</Link>
+                </li>
 
-              <li>
-                <Link className="flex items-center gap-2">Employee List</Link>
-              </li>
+                <li>
+                  <Link className="flex items-center gap-2">Employee List</Link>
+                </li>
 
-              <li>
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center gap-2 text-red-600"
-                >
-                  <FiLogOut /> Logout
-                </button>
-              </li>
-            </ul>
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 text-red-600"
+                  >
+                    <FiLogOut /> Logout
+                  </button>
+                </li>
+              </ul>
+            ) : (
+              <ul
+                // tabIndex={0}
+                className="
+      dropdown-content menu bg-white text-secondary rounded-xl shadow-lg w-48 mt-3 py-3
+
+      transform transition-all duration-300 origin-top 
+      opacity-0 -translate-y-3 pointer-events-none
+
+      group-focus-within:opacity-100
+      group-focus-within:translate-y-0
+      group-focus-within:pointer-events-auto
+    "
+              >
+                <li>
+                  <Link className="flex items-center gap-2">
+                    <FiUser /> Profile
+                  </Link>
+                </li>
+
+                <li>
+                  <Link className="flex items-center gap-2">My Assets</Link>
+                </li>
+
+                <li>
+                  <Link className="flex items-center gap-2">My Team</Link>
+                </li>
+
+                <li>
+                  <Link className="flex items-center gap-2">Request an Asset</Link>
+                </li>
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 text-red-600"
+                  >
+                    <FiLogOut /> Logout
+                  </button>
+                </li>
+              </ul>
+            )}
           </div>
         ) : (
           <Link
@@ -162,10 +211,6 @@ const Navbar = () => {
             Login
           </Link>
         )}
-
-        {/* {
-      user ? <a onClick={handleLogout} className="bg-primary text-white text-lg font-semibold py-3 rounded-xl hover:bg-blue-700 transition-all px-6">SignOut</a> :<Link to='/login' className="bg-primary text-white text-lg font-semibold py-3 px-6 rounded-xl hover:bg-blue-700 transition-all">Login</Link>
-    } */}
       </div>
     </nav>
   );

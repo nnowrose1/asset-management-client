@@ -16,10 +16,10 @@ const Login = () => {
   const { signInUser } = useAuth();
 
   const handleLogin = (data) => {
-    console.log(data);
+    // console.log(data);
     signInUser(data.email, data.password)
-      .then((res) => {
-        console.log(res.user);
+      .then(() => {
+        // console.log(res.user);
         navigate(location?.state || "/");
       })
       .catch((err) => {
