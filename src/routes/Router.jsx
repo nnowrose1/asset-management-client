@@ -10,6 +10,12 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import AddAsset from "../pages/dashboard/hr/AddAsset";
 import PrivateRoute from "./PrivateRoute";
 import HRRoute from "./HRRoute";
+import MyProfile from "../pages/dashboard/MyProfile";
+import AssetList from "../pages/dashboard/hr/AssetList";
+import EmployeeRoute from './EmployeeRoute';
+import RequestAsset from "../pages/dashboard/employee/RequestAsset";
+import AllRequests from "../pages/dashboard/hr/AllRequests";
+import MyEmployees from "../pages/dashboard/hr/MyEmployees";
 
 export const router = createBrowserRouter([
   {
@@ -55,7 +61,33 @@ export const router = createBrowserRouter([
       },
       {
         path:'profile',
-        
+        Component: MyProfile
+
+      },
+      {
+        path: 'assetList',
+        element: <HRRoute>
+        <AssetList></AssetList>
+        </HRRoute>
+      },
+      {
+     path: 'allRequests',
+     element: <HRRoute>
+     <AllRequests></AllRequests>
+     </HRRoute>
+      },
+      {
+      path: 'myEmployees',
+      element: <HRRoute>
+      <MyEmployees></MyEmployees>
+      </HRRoute>
+      },
+      // employee only routes
+      {
+        path: 'requestAsset',
+        element: <EmployeeRoute>
+         <RequestAsset></RequestAsset>
+        </EmployeeRoute>
       }
     ]
   }

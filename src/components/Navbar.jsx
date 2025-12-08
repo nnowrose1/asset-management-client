@@ -137,15 +137,15 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                  <Link className="flex items-center gap-2">Asset List</Link>
+                  <Link to="/dashboard/assetList" className="flex items-center gap-2">Asset List</Link>
                 </li>
 
                 <li>
-                  <Link className="flex items-center gap-2">Add Asset</Link>
+                  <Link to="/dashboard/addAsset" className="flex items-center gap-2">Add Asset</Link>
                 </li>
 
                 <li>
-                  <Link className="flex items-center gap-2">All Requests</Link>
+                  <Link to='/dashboard/allRequests' className="flex items-center gap-2">All Requests</Link>
                 </li>
 
                 <li>
@@ -190,7 +190,7 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                  <Link className="flex items-center gap-2">Request an Asset</Link>
+                  <Link to="/dashboard/requestAsset" className="flex items-center gap-2">Request an Asset</Link>
                 </li>
                 <li>
                   <button
