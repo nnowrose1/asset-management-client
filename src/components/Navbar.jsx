@@ -41,11 +41,7 @@ const Navbar = () => {
         <NavLink to="/hrRegister">Join as HR Manager</NavLink>
       </li>
 
-      {
-    user && <>
-    <li><NavLink to="/dashboard/profile">My Profile</NavLink></li>
-     </>
-  }
+     
     </>
   );
 
@@ -182,7 +178,7 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                  <Link className="flex items-center gap-2">My Assets</Link>
+                  <Link to='/dashboard/myAssets' className="flex items-center gap-2">My Assets</Link>
                 </li>
 
                 <li>
