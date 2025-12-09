@@ -8,6 +8,8 @@ import useRole from "../customHooks/useRole";
 import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
 import { FaPerson } from "react-icons/fa6";
 import { TbBrandMyOppo } from "react-icons/tb";
+import { RiTeamFill } from "react-icons/ri";
+import { CgProfile } from "react-icons/cg";
 
 const DashboardLayout = () => {
   const { role } = useRole();
@@ -193,6 +195,35 @@ const DashboardLayout = () => {
                     <MdRequestPage />
                     <span className="is-drawer-close:hidden">
                       Request Asset
+                    </span>
+                  </NavLink>
+                </li>
+
+                 {/* List item: My Team*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/myTeam"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Team"
+                  >
+                    <RiTeamFill />
+                    <span className="is-drawer-close:hidden">
+                      My Team
+                    </span>
+                  </NavLink>
+                </li>
+
+                
+                 {/* List item: My Profile*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/myProfile"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Profile"
+                  >
+                    <CgProfile />
+                    <span className="is-drawer-close:hidden">
+                      My Profile
                     </span>
                   </NavLink>
                 </li>

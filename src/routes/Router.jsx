@@ -10,13 +10,15 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import AddAsset from "../pages/dashboard/hr/AddAsset";
 import PrivateRoute from "./PrivateRoute";
 import HRRoute from "./HRRoute";
-import MyProfile from "../pages/dashboard/MyProfile";
+
 import AssetList from "../pages/dashboard/hr/AssetList";
 import EmployeeRoute from './EmployeeRoute';
 import RequestAsset from "../pages/dashboard/employee/RequestAsset";
 import AllRequests from "../pages/dashboard/hr/AllRequests";
 import MyEmployees from "../pages/dashboard/hr/MyEmployees";
 import MyAssets from "../pages/dashboard/employee/MyAssets";
+import MyTeam from "../pages/dashboard/employee/MyTeam";
+import MyProfile from "../pages/dashboard/employee/MyProfile";
 
 export const router = createBrowserRouter([
   {
@@ -60,11 +62,7 @@ export const router = createBrowserRouter([
         <AddAsset></AddAsset>
         </HRRoute>
       },
-      {
-        path:'profile',
-        Component: MyProfile
-
-      },
+   
       {
         path: 'assetList',
         element: <HRRoute>
@@ -95,6 +93,16 @@ export const router = createBrowserRouter([
         element: <EmployeeRoute>
           <MyAssets></MyAssets>
         </EmployeeRoute>
+      },
+      {
+        path: 'myTeam',
+        element: <EmployeeRoute>
+          <MyTeam></MyTeam>
+        </EmployeeRoute>
+      },
+      {
+        path: 'myProfile',
+        Component: MyProfile
       }
     ]
   }

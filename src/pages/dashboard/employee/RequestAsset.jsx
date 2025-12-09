@@ -11,7 +11,7 @@ const RequestAsset = () => {
   const axiosSecure = useAxiosSecure();
   const reqModalRef = useRef();
   const [text, setText] = useState('');
-  const [asset, selectedAsset] = useState(null);
+  const [asset, setSelectedAsset] = useState(null);
   const [requestedAsset, setRequestedAsset] = useState([]);
   const { data: assets = [] } = useQuery({
     queryKey: ["assets"],
@@ -23,8 +23,10 @@ const RequestAsset = () => {
 
   const openSendReqModal = (asset) => {
     reqModalRef.current.showModal();
-    selectedAsset(asset)
+    setSelectedAsset(asset)
   }
+  console.log(user.photoURL);
+  
     
     const handleSubmitRequest = () => {  
     
@@ -35,6 +37,8 @@ const RequestAsset = () => {
       assetType: asset.productType,
       requesterName: user.name,
       requesterEmail: user.email,
+      requesterBirthday: user.dateOfBirth,
+      requesterImage: user.photoURL,
       hrEmail: asset.hrEmail,
       companyName: asset.companyName,
       requestDate: new Date(),

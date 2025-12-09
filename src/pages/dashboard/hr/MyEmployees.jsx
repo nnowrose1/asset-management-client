@@ -105,7 +105,7 @@ const MyEmployees = () => {
                       <div className="avatar">
                         <div className="mask mask-squircle h-12 w-12">
                           <img
-                            src={employee.productImage}
+                            src={employee.employeeImage}
                             alt="employee Image"
                           />
                         </div>

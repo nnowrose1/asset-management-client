@@ -172,7 +172,7 @@ const Navbar = () => {
     "
               >
                 <li>
-                  <Link className="flex items-center gap-2">
+                  <Link to='/dashboard/myProfile' className="flex items-center gap-2">
                     <FiUser /> Profile
                   </Link>
                 </li>
@@ -182,7 +182,7 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                  <Link className="flex items-center gap-2">My Team</Link>
+                  <Link to='/dashboard/myTeam' className="flex items-center gap-2">My Team</Link>
                 </li>
 
                 <li>

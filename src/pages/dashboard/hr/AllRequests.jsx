@@ -25,6 +25,8 @@ const AllRequests = () => {
       return;
     }
 
+    // console.log(request.requesterImage);
+
     const updated = {
       status: "approved",
       date: new Date(),
@@ -33,6 +35,7 @@ const AllRequests = () => {
       companyAffiliation: {
         employeeEmail: request.requesterEmail,
         employeeName: request.requesterName,
+        employeeImage: request.requesterImage,
         hrEmail: request.hrEmail,
         companyName: request.companyName,
 
@@ -40,6 +43,9 @@ const AllRequests = () => {
         status: "active",
       },
     };
+
+    
+    
 
     Swal.fire({
       title: "Are you sure?",
