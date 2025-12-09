@@ -12,7 +12,7 @@ const AllRequests = () => {
   const { data: requests = [], refetch } = useQuery({
     queryKey: ["requests", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/requests?email=${user?.email}`);
+      const res = await axiosSecure.get(`/requests/${user?.email}`);
       return res.data;
     },
   });

@@ -12,6 +12,7 @@ const RequestAsset = () => {
   const reqModalRef = useRef();
   const [text, setText] = useState('');
   const [asset, selectedAsset] = useState(null);
+  const [requestedAsset, setRequestedAsset] = useState([]);
   const { data: assets = [] } = useQuery({
     queryKey: ["assets"],
     queryFn: async () => {
@@ -26,6 +27,7 @@ const RequestAsset = () => {
   }
     
     const handleSubmitRequest = () => {  
+    
        const request = {
       assetId: asset._id,
       assetName: asset.productName,
@@ -46,7 +48,7 @@ const RequestAsset = () => {
         toast.success(`${asset.productName} has been requested.`);
         setText('');
        reqModalRef.current.close();
-        
+         setRequestedAsset((prev) => [...prev, asset._id])
       })
       .catch((err) => {
         console.log(err);
@@ -87,9 +89,10 @@ const RequestAsset = () => {
 
               <button
                 onClick={() => openSendReqModal(item)}
+                disabled={requestedAsset.includes(item._id)}
                 className="mt-4 w-full bg-primary text-white py-2 rounded-xl hover:bg-blue-700 transition"
               >
-                Request Asset
+               {requestedAsset.includes(item._id) ? "Already Requested" : "Request Asset"}
               </button>
               <dialog ref={reqModalRef} className="modal">
                 <div className="modal-box">
@@ -115,6 +118,7 @@ const RequestAsset = () => {
                       onClick={() => {
                         setText('');
                         reqModalRef.current.close();
+                        
                       }}
                        className="btn btn-primary text-white ms-2">Cancel</button>
                     </form>

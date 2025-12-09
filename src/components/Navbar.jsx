@@ -149,7 +149,7 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                  <Link className="flex items-center gap-2">Employee List</Link>
+                  <Link to='/dashboard/myEmployees' className="flex items-center gap-2">Employee List</Link>
                 </li>
 
                 <li>
