@@ -1,96 +1,161 @@
-// import React, { useState } from 'react';
-// import useAxiosSecure from '../../../customHooks/useAxiosSecure';
-// import useAuth from '../../../customHooks/useAuth';
+import React, { useRef, useState } from "react";
+import useAxiosSecure from "../../../customHooks/useAxiosSecure";
+import useAuth from "../../../customHooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import { useReactToPrint } from "react-to-print";
 
-// const MyAssets = () => {
-//     const axiosSecure = useAxiosSecure();
-//   const { user } = useAuth();
-//   const [searchText, setSearchText] = useState("");
-//     return (
-//        <div className="px-6">
-//             <h2 className="text-3xl font-semibold text-secondary text-center py-6">
-//               Asset List
-//             </h2>
-//             {/* search box */}
-//             <div className="join mb-6">
-//               <label className="input validator join-item">
-//                 <input
-//                   value={searchText}
-//                   onChange={(e) => setSearchText(e.target.value)}
-//                   type="text"
-//                   placeholder="search asset"
-//                   required
-//                 />
-//               </label>
-      
-//               <button className="btn btn-primary text-white join-item">Search</button>
-//             </div>
-      
-//             <div className="overflow-x-auto">
-//               {
-//                 filteredAssets.length === 0 ? 
-//                 <h2 className="text-2xl text-secondary font-semibold text-center py-6">No assets found!</h2>
-//                 :
-              
-//               <table className="table">
-//                 {/* head */}
-//                 <thead>
-//                   <tr>
-//                     <th>Serial No.</th>
-//                     <th>Asset Image</th>
-//                     <th>Name</th>
-//                     <th>Type</th>
-//                     <th>Company Name</th>
-//                     <th>Request Date</th>
-//                     <th>Approval Date</th>
-//                     <th>Status</th>
-//                   </tr>
-//                 </thead>
-//                 <tbody>
-//                   {filteredAssets.map((asset, index) => (
-//                     <tr key={asset._id}>
-//                       <th>{index + 1}</th>
-//                       <td>
-//                         <div className="flex items-center gap-3">
-//                           <div className="avatar">
-//                             <div className="mask mask-squircle h-12 w-12">
-//                               <img src={asset.productImage} alt="Asset Image" />
-//                             </div>
-//                           </div>
-//                         </div>
-//                       </td>
-//                       <td className="font-semibold">{asset.productName}</td>
-//                       <td>{asset.productType}</td>
-//                       <td className="font-semibold">{asset.availableQuantity}</td>
-//                       <td>{new Date(asset.dateAdded).toLocaleString()}</td>
-//                       <th>
-//                         <button className="btn btn-primary hover:bg-blue-800 text-white btn-xs">
-                          
-//                         </button>
-//                         <button className="btn btn-primary hover:bg-blue-800 text-white btn-xs ms-2">
-                          
-//                         </button>
-//                       </th>
-//                     </tr>
-//                   ))}
-//                 </tbody>
-//               </table>
-//       }
-//             </div>
-                
-//           </div>
-//     );
-// };
-
-// export default MyAssets;
-import React from 'react';
 
 const MyAssets = () => {
-    return (
-        <div>
-            
-        </div>
+  const printRef = useRef(null);
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  const [searchText, setSearchText] = useState("");
+  const [selectedType, setSelectedType] = useState("all");
+
+  const { data: assignedAssets = [] } = useQuery({
+    queryKey: ["assignedAssets", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/assignedAssets?email=${user.email}`);
+      return res.data;
+    },
+  });
+
+  const { data: approvedAssets = [] } = useQuery({
+    queryKey: ["approvedRequests", user.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/requests?requesterEmail=${user?.email}&requestStatus=approved`
+      );
+      return res.data;
+    },
+  });
+
+  const allAssets = [...assignedAssets, ...approvedAssets];
+
+  //   filter based on search and filter
+  const filteredAssets = allAssets
+    .filter((asset) =>
+      asset.assetName.toLowerCase().includes(searchText.toLowerCase())
+    )
+    .filter((asset) =>
+      selectedType === "all" ? true : asset.assetType === selectedType
     );
+
+  //   printing
+  const handlePrint = useReactToPrint({
+    documentTitle: "Title",
+    contentRef: printRef,
+  });
+
+  return (
+    <div ref={printRef} className="px-6">
+      <h2 className="text-3xl font-semibold text-secondary text-center py-6">
+        My Assets
+      </h2>
+
+      <div className="flex flex-col gap-4 md:flex-row justify-between">
+        {/* search box */}
+        <div className="join mb-6">
+          <label className="input validator join-item">
+            <input
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              type="text"
+              placeholder="search asset"
+              required
+            />
+          </label>
+
+          <button className="btn btn-primary text-white join-item">
+            Search
+          </button>
+        </div>
+
+        {/* filtering*/}
+        <select
+          className="select select-bordered ml-3"
+          value={selectedType}
+          onChange={(e) => setSelectedType(e.target.value)}
+        >
+          <option value="all">Filter by Types</option>
+          <option value="Returnable">Returnable</option>
+          <option value="Non-returnable">Non-returnable</option>
+        </select>
+
+        {/* print button */}
+        <button
+          onClick={handlePrint}
+          className="btn btn-primary hover:bg-blue-800 text-white"
+        >
+          Print
+        </button>
+      </div>
+
+      <div className="overflow-x-auto">
+        {filteredAssets.length === 0 ? (
+          <h2 className="text-2xl text-secondary font-semibold text-center py-6">
+            No assets found!
+          </h2>
+        ) : (
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Serial No.</th>
+                <th>Asset Image</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Company Name</th>
+                <th>Request Date</th>
+                <th>Assigned/Approval Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredAssets.map((asset, index) => (
+                <tr key={asset._id}>
+                  <th>{index + 1}</th>
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-12 w-12">
+                          <img src={asset.assetImage} alt="Asset Image" />
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="font-semibold">{asset.assetName}</td>
+                  <td>{asset.assetType}</td>
+                  <td className="font-semibold">{asset.companyName}</td>
+                  <td>
+                    {asset.requestDate
+                      ? new Date(asset.requestDate).toLocaleString()
+                      : "null"}
+                  </td>
+                  <td>
+                    {asset.approvalDate
+                      ? new Date(asset.approvalDate).toLocaleString()
+                      : new Date(asset.assignmentDate).toLocaleString()}
+                  </td>
+                  <td className="font-semibold">
+                    {asset.requestStatus || asset.status}
+                  </td>
+                  <th>
+                    {(asset.requestStatus === "approved" ||
+                      asset.status === "assigned") &&
+                      asset.assetType === "Returnable" && (
+                        <button className="btn btn-primary hover:bg-blue-800 text-white btn-xs">
+                          Return
+                        </button>
+                      )}
+                  </th>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default MyAssets;

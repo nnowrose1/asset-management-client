@@ -58,11 +58,16 @@ const AssetList = () => {
       toast.error("No available quantity left!");
       return;
     }
-    axiosSecure.post("/assignedAssets", assignedAsset).then(() => {
+    axiosSecure.post("/assignedAssets", assignedAsset)
+    .then(() => {
       toast.success(
         `${product.productName} has been assigned to ${employee.employeeName}`
       );
-    });
+    })
+    .catch(err => {
+      console.log(err);
+      
+    })
 
     const updatedQuantity = {
       availableQuantity: product.availableQuantity - 1,

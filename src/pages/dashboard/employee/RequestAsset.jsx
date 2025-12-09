@@ -31,6 +31,7 @@ const RequestAsset = () => {
        const request = {
       assetId: asset._id,
       assetName: asset.productName,
+      assetImage: asset.productImage,
       assetType: asset.productType,
       requesterName: user.name,
       requesterEmail: user.email,
