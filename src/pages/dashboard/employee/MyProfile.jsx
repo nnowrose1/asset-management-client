@@ -70,7 +70,7 @@ const MyProfile = () => {
   return (
     <div className="px-6 py-6">
       {/* HEADER */}
-      <h2 className="text-3xl font-semibold text-secondary mb-4 text-center">
+      <h2 className="text-3xl font-semibold text-secondary mb-6 text-center">
         My Profile
       </h2>
           {role === "employee" &&

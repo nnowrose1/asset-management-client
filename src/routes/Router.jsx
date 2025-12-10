@@ -20,6 +20,7 @@ import MyTeam from "../pages/dashboard/employee/MyTeam";
 import MyProfile from "../pages/dashboard/employee/MyProfile";
 import UpgradePackage from "../pages/dashboard/hr/UpgradePackage";
 
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -87,6 +88,7 @@ export const router = createBrowserRouter([
         <UpgradePackage></UpgradePackage>
         </HRRoute>
       },
+    
     
       // employee only routes
       {
