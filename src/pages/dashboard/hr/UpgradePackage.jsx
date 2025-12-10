@@ -2,9 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAxiosSecure from "../../../customHooks/useAxiosSecure";
 import { Link } from "react-router";
+import useAuth from "../../../customHooks/useAuth";
 
 const UpgradePackage = () => {
   const axiosSecure = useAxiosSecure();
+  const {user} = useAuth();
   const { data: packages = [] } = useQuery({
     queryKey: ["packages"],
     queryFn: async () => {
@@ -17,7 +19,11 @@ const UpgradePackage = () => {
       const paymentInfo = {
         cost: pkg.price,
         packageName: pkg.name,
-        packageId: pkg._id
+        packageId: pkg._id,
+        currentPackageLimit: user.packageLimit,
+        purchasedPackageLimit: pkg.employeeLimit,
+        userId: user._id
+
       }
       const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
       window.location.href = res.data.url;
