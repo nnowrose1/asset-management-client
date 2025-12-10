@@ -1,4 +1,3 @@
-import React from "react";
 import useAuth from "../../../customHooks/useAuth";
 import useAxiosSecure from "../../../customHooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
@@ -17,7 +16,7 @@ const AllRequests = () => {
     },
   });
 
-  const handleAccept = (request) => {
+  const handleAccept = async (request) => {
     if (
       request.requestStatus === "approved" ||
       request.requestStatus === "rejected"
@@ -25,7 +24,19 @@ const AllRequests = () => {
       return;
     }
 
-    // console.log(request.requesterImage);
+    // check the employee limit
+    if (user?.currentEmployees >= user.packageLimit) {
+      toast.error("Package limit exceeded. Please Upgrade your Package!");
+      return;
+    }
+
+    const requestedAsset = await axiosSecure.get(`/assets/${request.assetId}`);
+    //  console.log(requestedAsset);
+
+    if (requestedAsset.data.availableQuantity === 0) {
+      toast.error("Not available");
+      return;
+    }
 
     const updated = {
       status: "approved",
@@ -66,7 +77,6 @@ const AllRequests = () => {
           .catch((err) => {
             console.log(err);
           });
-       
       }
     });
   };

@@ -43,7 +43,8 @@ const EmployeeRegister = () => {
             console.log("updated!");
             axiosSecure.post('/users', employeeInfo)
             .then(() => {
-              console.log("Employee info posted");  
+              console.log("Employee info posted"); 
+             navigate(location?.state || '/');
             })
             .catch(err => {
               console.log(err.message);             
@@ -52,7 +53,7 @@ const EmployeeRegister = () => {
         .catch(err => {
             console.log(err.message);           
         })
-        navigate(location?.state || '/');
+        
       })
       .catch(err => {
         toast.error(err.message);

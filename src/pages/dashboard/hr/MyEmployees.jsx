@@ -53,7 +53,7 @@ const MyEmployees = () => {
           refetch();
           Swal.fire({
             title: "Deleted!",
-            text: "${employee.employeeName} has been removed.",
+            text: `${employee.employeeName} has been removed.`,
             icon: "success",
           });
         })
