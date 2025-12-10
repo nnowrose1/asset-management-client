@@ -32,6 +32,7 @@ const AllRequests = () => {
       date: new Date(),
       processedBy: user.email,
       assetId: request.assetId,
+      userId: user._id,
       companyAffiliation: {
         employeeEmail: request.requesterEmail,
         employeeName: request.requesterName,
@@ -43,9 +44,6 @@ const AllRequests = () => {
         status: "active",
       },
     };
-
-    
-    
 
     Swal.fire({
       title: "Are you sure?",

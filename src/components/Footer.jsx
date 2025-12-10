@@ -1,7 +1,8 @@
 import React from "react";
-import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import Logo from "./Logo";
 import { Link } from "react-router";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   return (
@@ -45,7 +46,7 @@ const Footer = () => {
           <div className="flex space-x-4 mt-4 text-xl">
             <a href="#" className="hover:text-white"><FaFacebookF /></a>
             <a href="#" className="hover:text-white"><FaLinkedinIn /></a>
-            <a href="#" className="hover:text-white"><FaTwitter /></a>
+            <a href="#" className="hover:text-white"><FaXTwitter /></a>
           </div>
         </div>
 

@@ -36,7 +36,10 @@ const MyTeam = () => {
 
       {/* Company Selector Tabs */}
       <div className="flex justify-center mb-6 space-x-4">
-        {companies.map((company) => (
+        {
+          companies.length === 0 ? <h2 className="text-3xl font-semibold text-primary my-6 text-center">No Company Affiliation</h2> :
+        companies.map((company) => (
+         
           <button
             key={company}
             className={`px-4 py-2 rounded-lg font-semibold ${

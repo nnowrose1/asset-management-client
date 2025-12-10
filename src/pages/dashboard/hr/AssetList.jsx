@@ -5,6 +5,8 @@ import useAuth from "../../../customHooks/useAuth";
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import { MdAssignmentTurnedIn } from "react-icons/md";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const AssetList = () => {
   const axiosSecure = useAxiosSecure();
@@ -58,16 +60,16 @@ const AssetList = () => {
       toast.error("No available quantity left!");
       return;
     }
-    axiosSecure.post("/assignedAssets", assignedAsset)
-    .then(() => {
-      toast.success(
-        `${product.productName} has been assigned to ${employee.employeeName}`
-      );
-    })
-    .catch(err => {
-      console.log(err);
-      
-    })
+    axiosSecure
+      .post("/assignedAssets", assignedAsset)
+      .then(() => {
+        toast.success(
+          `${product.productName} has been assigned to ${employee.employeeName}`
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     const updatedQuantity = {
       availableQuantity: product.availableQuantity - 1,
@@ -77,6 +79,40 @@ const AssetList = () => {
       .patch(`/assets/${product._id}`, updatedQuantity)
       .then(() => {
         refetch();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // const handleEdit = (asset) => {
+
+  // }
+
+  const handleDelete = (asset) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure.delete(`/assets/${asset._id}`).then((res) => {
+            if (res.data.deletedCount) {
+              
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your asset has been deleted.",
+                icon: "success",
+              });
+              refetch();
+            }
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -140,13 +176,17 @@ const AssetList = () => {
                   <td className="font-semibold">{asset.availableQuantity}</td>
                   <td>{new Date(asset.dateAdded).toLocaleString()}</td>
                   <th>
+                    
                     <button
+                      // onClick={() => handleEdit(asset)}
                       title="Edit"
                       className="btn btn-primary hover:bg-blue-800 text-white btn-xs"
                     >
                       <MdModeEdit />
                     </button>
+                    
                     <button
+                      onClick={() => handleDelete(asset)}
                       title="Delete"
                       className="btn btn-primary hover:bg-blue-800 text-white btn-xs ms-2"
                     >
@@ -166,7 +206,9 @@ const AssetList = () => {
             {/* modal */}
             <dialog ref={assignModalRef} className="modal">
               <div className="modal-box">
-                <h3 className="text-lg font-semibold text-secondary text-center py-6">Employees Affiliated: {employees.length} </h3>
+                <h3 className="text-lg font-semibold text-secondary text-center py-6">
+                  Employees Affiliated: {employees.length}{" "}
+                </h3>
                 <div className="overflow-x-auto">
                   <table className="table table-zebra">
                     {/* head */}

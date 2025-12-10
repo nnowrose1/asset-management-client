@@ -9,7 +9,7 @@ import useRole from "../customHooks/useRole";
 import Loader from '../components/Loader';
 
 const Navbar = () => {
-  const { user, logOut } = useAuth();
+  const { user, logOut, loading , setUser} = useAuth();
   const { role, isLoading } = useRole();
   // console.log(role);
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Navbar = () => {
   const handleLogout = () => {
     logOut()
       .then(() => {
-        // console.log(res.user);
+         setUser(null);
         navigate('/login')
       })
       .catch((err) => {
@@ -45,9 +45,10 @@ const Navbar = () => {
     </>
   );
 
-  if(isLoading){
+  if(isLoading || loading){
     return <Loader></Loader>
   }
+
   return (
     <nav className="navbar bg-gray-700 text-white sticky top-0 z-50  backdrop-blur-xl shadow">
       <div className="navbar-start">
@@ -127,7 +128,7 @@ const Navbar = () => {
     "
               >
                 <li>
-                  <Link className="flex items-center gap-2">
+                  <Link to='/dashboard/myProfile' className="flex items-center gap-2">
                     <FiUser /> Profile
                   </Link>
                 </li>

@@ -10,7 +10,6 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import AddAsset from "../pages/dashboard/hr/AddAsset";
 import PrivateRoute from "./PrivateRoute";
 import HRRoute from "./HRRoute";
-
 import AssetList from "../pages/dashboard/hr/AssetList";
 import EmployeeRoute from './EmployeeRoute';
 import RequestAsset from "../pages/dashboard/employee/RequestAsset";
@@ -19,6 +18,7 @@ import MyEmployees from "../pages/dashboard/hr/MyEmployees";
 import MyAssets from "../pages/dashboard/employee/MyAssets";
 import MyTeam from "../pages/dashboard/employee/MyTeam";
 import MyProfile from "../pages/dashboard/employee/MyProfile";
+import UpgradePackage from "../pages/dashboard/hr/UpgradePackage";
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +81,13 @@ export const router = createBrowserRouter([
       <MyEmployees></MyEmployees>
       </HRRoute>
       },
+      {
+        path: 'upgradePackage',
+        element: <HRRoute>
+        <UpgradePackage></UpgradePackage>
+        </HRRoute>
+      },
+    
       // employee only routes
       {
         path: 'requestAsset',

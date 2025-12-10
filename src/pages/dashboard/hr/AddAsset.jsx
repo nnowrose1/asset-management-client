@@ -36,7 +36,7 @@ const AddAsset = () => {
         hrEmail: user.email,
         companyName: user.companyName,
       };
-      console.log(user.companyName);
+      // console.log(user.companyName);
 
       axiosSecure
         .post("/assets", assetInfo)

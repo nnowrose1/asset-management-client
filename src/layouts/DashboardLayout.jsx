@@ -10,6 +10,7 @@ import { FaPerson } from "react-icons/fa6";
 import { TbBrandMyOppo } from "react-icons/tb";
 import { RiTeamFill } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
+import { GiArmorUpgrade } from "react-icons/gi";
 
 const DashboardLayout = () => {
   const { role } = useRole();
@@ -153,6 +154,10 @@ const DashboardLayout = () => {
                   </NavLink>
                 </li>
 
+              
+
+             
+
                  {/* List item: My Employees*/}
                 <li>
                   <NavLink
@@ -162,6 +167,18 @@ const DashboardLayout = () => {
                   >
                     <FaPerson />
                     <span className="is-drawer-close:hidden">My Employees</span>
+                  </NavLink>
+                </li>
+
+                   {/* List item: Upgrade Package*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/upgradePackage"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Upgrade Package"
+                  >
+                    <GiArmorUpgrade />
+                    <span className="is-drawer-close:hidden">Upgrade Package</span>
                   </NavLink>
                 </li>
               </>
@@ -211,10 +228,11 @@ const DashboardLayout = () => {
                       My Team
                     </span>
                   </NavLink>
-                </li>
+                </li>   
+              </>
+            )}
 
-                
-                 {/* List item: My Profile*/}
+            {/* List item: My Profile*/}
                 <li>
                   <NavLink
                     to="/dashboard/myProfile"
@@ -227,8 +245,6 @@ const DashboardLayout = () => {
                     </span>
                   </NavLink>
                 </li>
-              </>
-            )}
           </ul>
         </div>
       </div>
