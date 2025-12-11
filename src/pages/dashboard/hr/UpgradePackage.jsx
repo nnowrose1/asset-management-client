@@ -22,7 +22,8 @@ const UpgradePackage = () => {
         packageId: pkg._id,
         currentPackageLimit: user.packageLimit,
         purchasedPackageLimit: pkg.employeeLimit,
-        userId: user._id
+        userId: user._id,
+        userEmail: user.email
 
       }
       const res = await axiosSecure.post("/create-checkout-session", paymentInfo);

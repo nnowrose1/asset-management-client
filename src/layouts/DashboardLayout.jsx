@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import { IoIosAddCircle } from "react-icons/io";
 import logo from "../assets/logo1.jpg";
-import { FaList } from "react-icons/fa";
+import { FaHistory, FaList } from "react-icons/fa";
 import { MdRequestPage } from "react-icons/md";
 import useRole from "../customHooks/useRole";
 import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
@@ -179,6 +179,18 @@ const DashboardLayout = () => {
                   >
                     <GiArmorUpgrade />
                     <span className="is-drawer-close:hidden">Upgrade Package</span>
+                  </NavLink>
+                </li>
+
+                 {/* List item: Payment History*/}
+                <li>
+                  <NavLink
+                    to="/dashboard/paymentHistory"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Payment History"
+                  >
+                    <FaHistory />
+                    <span className="is-drawer-close:hidden">Payment History</span>
                   </NavLink>
                 </li>
               </>

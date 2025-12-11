@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 import useAxiosSecure from "../customHooks/useAxiosSecure";
+import useAxios from "../customHooks/useaxios";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -18,6 +19,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const axiosSecure = useAxiosSecure();
+  const axiosInstance = useAxios();
 
   const registerUser = (email, password) => {
     setLoading(true);
@@ -47,11 +49,22 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, async(currentUser) => {
       if(currentUser){
-        const res = await axiosSecure.get(`/users/${currentUser.email}`);
+        // jwt token
+         const loggedInfo = { email: currentUser.email };
+         axiosInstance.post('/getToken', loggedInfo)
+          .then((res) => {
+           console.log("after getting token", res.data);
+            localStorage.setItem("token", res.data.token);
+          });
+
+       const res = await axiosSecure.get(`/users/${currentUser.email}`);
         setUser(res.data);
-        // return res.data;
         
       }  
+       else{
+        localStorage.removeItem('token');
+      }
+
       setLoading(false);
     });
 

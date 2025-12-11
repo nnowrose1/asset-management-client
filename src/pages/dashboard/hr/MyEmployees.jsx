@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 const MyEmployees = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  console.log(user.email);
+  // console.log(user);
 
   const {
     data: employees = [],
@@ -28,10 +28,10 @@ const MyEmployees = () => {
       const res = await axiosSecure.get(
         `/requests?hrEmail=${user?.email}&requestStatus=approved`
       );
-      console.log(
-        "URL sent:",
-        `/requests?hrEmail=${user?.email}&requestStatus=approved`
-      );
+      // console.log(
+      //   "URL sent:",
+      //   `/requests?hrEmail=${user?.email}&requestStatus=approved`
+      // );
       return res.data;
     },
   });
@@ -122,7 +122,7 @@ const MyEmployees = () => {
                       onClick={() => handleRemove(employee)}
                       className="btn  bg-red-500 hover:bg-red-800 text-white btn-xs"
                     >
-                      Remove from Team
+                      Remove
                     </button>
                   </th>
                 </tr>

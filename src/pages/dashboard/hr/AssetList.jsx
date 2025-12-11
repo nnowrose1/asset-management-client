@@ -175,7 +175,7 @@ const AssetList = () => {
                   <td>{asset.productType}</td>
                   <td className="font-semibold">{asset.availableQuantity}</td>
                   <td>{new Date(asset.dateAdded).toLocaleString()}</td>
-                  <th>
+                  <th className="flex flex-col md:flex-row gap-2 md:gap-1">
                     
                     <button
                       // onClick={() => handleEdit(asset)}

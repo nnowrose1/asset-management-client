@@ -1,20 +1,30 @@
 import useAuth from "../../../customHooks/useAuth";
 import useAxiosSecure from "../../../customHooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 const AllRequests = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 10;
 
   const { data: requests = [], refetch } = useQuery({
-    queryKey: ["requests", user?.email],
+    queryKey: ["requests", user?.email, currentPage, limit],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/requests/${user?.email}`);
+      const res = await axiosSecure.get(
+        `/requests/${user?.email}?limit=${limit}&page=${currentPage}`
+      );
       return res.data;
     },
   });
+
+  const allRequests = requests?.result || [];
+  const totalRequests = requests?.totalCount || 0;
+  const totalPages = Math.ceil(totalRequests / limit);
+  //  console.log({ requests, allRequests, totalRequests, totalPages });
 
   const handleAccept = async (request) => {
     if (
@@ -107,7 +117,7 @@ const AllRequests = () => {
   return (
     <div className="px-6">
       <h2 className="text-3xl font-semibold text-secondary text-center py-6">
-        All Requests
+        All Requests: {totalRequests}
       </h2>
 
       <div className="overflow-x-auto">
@@ -115,7 +125,7 @@ const AllRequests = () => {
           {/* head */}
           <thead>
             <tr>
-              <th>Serial No.</th>
+              <th></th>
               <th>Employee</th>
               <th>Asset</th>
               <th>Date Requested</th>
@@ -124,8 +134,8 @@ const AllRequests = () => {
             </tr>
           </thead>
           <tbody>
-            {requests.map((request, index) => (
-              <tr key={request._id}>
+            {allRequests.map((request, index) => (
+              <tr key={index}>
                 <th>{index + 1}</th>
                 <td>{request.requesterName}</td>
                 <td className="font-semibold">{request.assetName}</td>
@@ -144,7 +154,7 @@ const AllRequests = () => {
                   {request.requestStatus}
                 </td>
 
-                <th>
+                <th className="flex flex-col md:flex-row gap-2">
                   <button
                     onClick={() => handleAccept(request)}
                     className="btn btn-primary hover:bg-blue-800 text-white btn-xs"
@@ -163,6 +173,37 @@ const AllRequests = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center flex-wrap gap-2 py-8">
+        {currentPage > 1 && (
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className="btn"
+          >
+            Prev
+          </button>
+        )}
+{/* i 0 theke start hoy. page number jaate 1 theke start hoy ejonno i +1 */}
+        {[...Array(totalPages).keys()].map((i) => (
+          <button
+            onClick={() => setCurrentPage(i +1)}
+            className={`btn ${i+1 === currentPage && "btn-primary"}`}
+          >
+            {i + 1}
+          </button>
+        ))}
+        {currentPage < totalPages  && (
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className="btn"
+          >
+            Next
+          </button>
+        )}
+      </div>
+
+
     </div>
   );
 };

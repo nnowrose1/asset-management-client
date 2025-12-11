@@ -21,6 +21,7 @@ import MyProfile from "../pages/dashboard/employee/MyProfile";
 import UpgradePackage from "../pages/dashboard/hr/UpgradePackage";
 import PaymentSuccess from "../pages/dashboard/payment/PaymentSuccess";
 import PaymentCancelled from "../pages/dashboard/payment/PaymentCancelled";
+import PaymentHistory from "../pages/dashboard/payment/PaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -108,6 +109,11 @@ export const router = createBrowserRouter([
       {
         path: "paymentCancelled",
         Component: PaymentCancelled,
+      },
+      {
+          path: 'paymentHistory',
+          element: <PaymentHistory></PaymentHistory>
+          
       },
 
       // employee only routes
