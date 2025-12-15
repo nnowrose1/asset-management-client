@@ -8,21 +8,34 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
 
+
 const AssetList = () => {
+  
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [searchText, setSearchText] = useState("");
   const assignModalRef = useRef();
   const [product, setProduct] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 10;
 
   const { data: assets = [], refetch } = useQuery({
-    queryKey: ["assetList", user?.email],
+    queryKey: ["assets", user?.email,  currentPage, limit],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/assets?email=${user.email}`);
+      const res = await axiosSecure.get(`/assets?email=${user.email}&limit=${limit}&page=${currentPage}`);  
+     
+      //  console.log(res.data);
       return res.data;
-      // console.log(res.data);
     },
   });
+  //  console.log(assets);
+  
+
+  //  const allAssets = assets?.result || [];
+  const totalAssets = assets?.length || 0;
+  const totalPages = Math.ceil(totalAssets / limit);
+  // console.log({totalAssets, totalPages});
+  
 
   const { data: employees = [] } = useQuery({
     queryKey: ["employees", user.email],
@@ -250,6 +263,35 @@ const AssetList = () => {
               </div>
             </dialog>
           </table>
+        )}
+      </div>
+
+        {/* Pagination */}
+      <div className="flex justify-center flex-wrap gap-2 py-8">
+        {currentPage > 1 && (
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className="btn"
+          >
+            Prev
+          </button>
+        )}
+{/* i 0 theke start hoy. page number jaate 1 theke start hoy ejonno i +1 */}
+        {[...Array(totalPages).keys()].map((i) => (
+          <button
+            onClick={() => setCurrentPage(i + 1)}
+            className={`btn ${i+1 === currentPage && "btn-primary"}`}
+          >
+            {i + 1}
+          </button>
+        ))}
+        {currentPage < totalPages  && (
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className="btn"
+          >
+            Next
+          </button>
         )}
       </div>
     </div>

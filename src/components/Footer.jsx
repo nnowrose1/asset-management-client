@@ -3,8 +3,10 @@ import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import Logo from "./Logo";
 import { Link } from "react-router";
 import { FaXTwitter } from "react-icons/fa6";
+import useRole from '../customHooks/useRole'
 
 const Footer = () => {
+  const {role} = useRole();
   return (
     <footer className="bg-gray-800 text-gray-300 pt-12 mb-6 mt-10">
 
@@ -34,9 +36,15 @@ const Footer = () => {
           <h3 className="text-lg font-semibold text-white">Quick Links</h3>
           <ul className="mt-3 space-y-2 text-sm">
             <li><a href="/dashboard" className="hover:text-white">Dashboard</a></li>
-            <li><a href="/assets" className="hover:text-white">Assets</a></li>
-            <li><a href="/employees" className="hover:text-white">Employees</a></li>
-            <li><a href="/requests" className="hover:text-white">Requests</a></li>
+            {
+              role === 'employee' ? 
+              <li><a href="/dashboard/myAssets" className="hover:text-white">My Assets</a></li>
+              :
+              <li><a href="/dashboard/assetList" className="hover:text-white">My Assets</a></li>
+            }
+            
+            <li><a href="/employeeRegister" className="hover:text-white">Join as Employee</a></li>
+            <li><a href="/hrRegister" className="hover:text-white">Join as HR Manager</a></li>
           </ul>
         </div>
 

@@ -11,6 +11,8 @@ const MyAssets = () => {
   const { user } = useAuth();
   const [searchText, setSearchText] = useState("");
   const [selectedType, setSelectedType] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 10;
 
   const { data: assignedAssets = [] } = useQuery({
     queryKey: ["assignedAssets", user?.email],
@@ -31,6 +33,8 @@ const MyAssets = () => {
   });
 
   const allAssets = [...assignedAssets, ...approvedAssets];
+   const totalAssets = allAssets?.length || 0;
+  const totalPages = Math.ceil(totalAssets / limit);
 
   //   filter based on search and filter
   const filteredAssets = allAssets
@@ -154,6 +158,37 @@ const MyAssets = () => {
           </table>
         )}
       </div>
+
+      
+      {/* Pagination */}
+      <div className="flex justify-center flex-wrap gap-2 py-8">
+        {currentPage > 1 && (
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className="btn"
+          >
+            Prev
+          </button>
+        )}
+{/* i 0 theke start hoy. page number jaate 1 theke start hoy ejonno i +1 */}
+        {[...Array(totalPages).keys()].map((i) => (
+          <button
+            onClick={() => setCurrentPage(i +1)}
+            className={`btn ${i+1 === currentPage && "btn-primary"}`}
+          >
+            {i + 1}
+          </button>
+        ))}
+        {currentPage < totalPages  && (
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className="btn"
+          >
+            Next
+          </button>
+        )}
+      </div>
+
     </div>
   );
 };

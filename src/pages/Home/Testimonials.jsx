@@ -71,9 +71,10 @@ const Testimonials = () => {
 
       {/* Testimonials */}
       <div className="max-w-6xl mx-auto">
-        <h3 className="text-2xl font-bold text-secondary text-center mb-6">
+        <h2 className="text-3xl md:text-4xl font-bold text-secondary text-center mb-4">
           What Our Clients Say
-        </h3>
+        </h2>
+     
         <Marquee
           pauseOnHover={true}
           speed={40}

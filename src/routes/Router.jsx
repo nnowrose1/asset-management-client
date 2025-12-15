@@ -22,6 +22,8 @@ import UpgradePackage from "../pages/dashboard/hr/UpgradePackage";
 import PaymentSuccess from "../pages/dashboard/payment/PaymentSuccess";
 import PaymentCancelled from "../pages/dashboard/payment/PaymentCancelled";
 import PaymentHistory from "../pages/dashboard/payment/PaymentHistory";
+import HRDashboardHome from "../pages/dashboard/hr/hrDashboardHome";
+
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +63,14 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       // HR only routes
+       {
+        path: "homepage",
+        element: (
+          <HRRoute>
+            <HRDashboardHome></HRDashboardHome>
+          </HRRoute>
+        ),
+      },
       {
         path: "addAsset",
         element: (

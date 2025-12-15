@@ -25,7 +25,7 @@ const RequestAsset = () => {
     reqModalRef.current.showModal();
     setSelectedAsset(asset)
   }
-  console.log(user.photoURL);
+  // console.log(user.photoURL);
   
     
     const handleSubmitRequest = () => {  

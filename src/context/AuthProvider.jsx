@@ -12,6 +12,7 @@ import {
 import { auth } from "../firebase/firebase.config";
 import useAxiosSecure from "../customHooks/useAxiosSecure";
 import useAxios from "../customHooks/useaxios";
+import Loader from "../components/Loader";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -47,25 +48,44 @@ const AuthProvider = ({ children }) => {
 
   //   observer user state
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, async(currentUser) => {
-      if(currentUser){
-        // jwt token
-         const loggedInfo = { email: currentUser.email };
-         axiosInstance.post('/getToken', loggedInfo)
-          .then((res) => {
-           console.log("after getting token", res.data);
-            localStorage.setItem("token", res.data.token);
-          });
+    const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        try {
+          const loggedInfo = { email: currentUser.email };
 
-       const res = await axiosSecure.get(`/users/${currentUser.email}`);
-        setUser(res.data);
-        
-      }  
-       else{
-        localStorage.removeItem('token');
+          const tokenRes = await axiosInstance.post("/getToken", loggedInfo);
+          localStorage.setItem("token", tokenRes.data.token);
+
+          const res = await axiosSecure.get(`/users/${currentUser.email}`);
+          setUser(res?.data);
+        } catch (err) {
+          console.error("Auth error:", err);
+          setUser(null);
+          localStorage.removeItem("token");
+        } finally {
+          setLoading(false);
+        }
       }
+      //   // jwt token
+      //    const loggedInfo = { email: currentUser.email };
+      //    axiosInstance.post('/getToken', loggedInfo)
+      //     .then((res) => {
+      //      console.log("after getting token", res.data);
+      //       localStorage.setItem("token", res.data.token);
+      //     });
 
-      setLoading(false);
+      //  const res = await axiosSecure.get(`/users/${currentUser.email}`);
+      //   setUser(res?.data);
+
+      // }
+      //  else{
+      //   localStorage.removeItem('token');
+      // }
+      else {
+        setUser(null);
+        localStorage.removeItem("token");
+        setLoading(false);
+      }
     });
 
     return () => {
@@ -81,9 +101,15 @@ const AuthProvider = ({ children }) => {
     loading,
     logOut,
     updateUserProfile,
-    setUser
+    setUser,
   };
-  return <AuthContext value={authInfo}>{children}</AuthContext>;
+
+  return (
+    <AuthContext value={authInfo}>
+      {loading? <Loader></Loader> : children}
+      {/* {children} */}
+    </AuthContext>
+  );
 };
 
 export default AuthProvider;

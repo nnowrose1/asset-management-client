@@ -28,7 +28,7 @@ const PaymentHistory = () => {
               <th>Package Name</th>
               <th>Price</th>
               <th>Employee Limit</th>
-              <th>Tracking ID</th>
+          
               <th>Transaction ID</th>
               <th>Payment Date</th>
               <th>Status</th>

@@ -1,22 +1,24 @@
-import axios from 'axios';
-import React, { useEffect } from 'react';
-import useAuth from './useAuth';
-import { useNavigate } from 'react-router';
+import axios from "axios";
+import React, { useEffect } from "react";
+import useAuth from "./useAuth";
+//import { useNavigate } from 'react-router';
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://asset-management-server-seven.vercel.app",
 });
 
 const useAxiosSecure = () => {
-    const { user, logOut } = useAuth();
-  const navigate = useNavigate();
-
+  const { user, logOut } = useAuth() || {};
+  // const navigate = useNavigate();
 
   useEffect(() => {
+    // if(!user) {
+    //   return;
+    // }
     // intercept request
     const reqInterceptor = axiosSecure.interceptors.request.use(
       async (config) => {
-        const token = await localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
@@ -30,27 +32,26 @@ const useAxiosSecure = () => {
       },
       (error) => {
         console.log(error);
-        const statusCode = error.status;
+        const statusCode = error.response?.status;
         if (statusCode === 401 || statusCode === 403) {
           logOut()
             .then(() => {
-              navigate("/login");
+              // navigate("/login");
             })
             .catch((err) => {
               console.log(err);
             });
         }
         return Promise.reject(error);
-          }
+      }
     );
     //  unmount
     return () => {
-    axiosSecure.interceptors.request.eject(reqInterceptor);
-   axiosSecure.interceptors.response.eject(resInterceptor);
+      axiosSecure.interceptors.request.eject(reqInterceptor);
+      axiosSecure.interceptors.response.eject(resInterceptor);
     };
-  }, [user, logOut, navigate]);
+  }, [user, logOut]);
   return axiosSecure;
-
 };
 
 export default useAxiosSecure;

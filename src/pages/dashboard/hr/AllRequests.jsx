@@ -24,7 +24,7 @@ const AllRequests = () => {
   const allRequests = requests?.result || [];
   const totalRequests = requests?.totalCount || 0;
   const totalPages = Math.ceil(totalRequests / limit);
-  //  console.log({ requests, allRequests, totalRequests, totalPages });
+   console.log({ requests, allRequests, totalRequests, totalPages });
 
   const handleAccept = async (request) => {
     if (
