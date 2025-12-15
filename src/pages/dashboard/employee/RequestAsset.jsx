@@ -13,7 +13,8 @@ const RequestAsset = () => {
   const [text, setText] = useState('');
   const [asset, setSelectedAsset] = useState(null);
   const [requestedAsset, setRequestedAsset] = useState([]);
-  const { data: assets = [] } = useQuery({
+
+  const { data: assetsObject = [] } = useQuery({
     queryKey: ["assets"],
     queryFn: async () => {
       const res = await axiosSecure.get("/assets");
@@ -21,6 +22,9 @@ const RequestAsset = () => {
     },
   });
 
+  const assets = assetsObject?.result;
+  // console.log(assets);
+  
   const openSendReqModal = (asset) => {
     reqModalRef.current.showModal();
     setSelectedAsset(asset)
@@ -69,7 +73,7 @@ const RequestAsset = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
         {assets
-          .filter((item) => item.availableQuantity > 0)
+          ?.filter((item) => item.availableQuantity > 0)
           .map((item) => (
             <div
               key={item._id}
