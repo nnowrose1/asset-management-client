@@ -11,18 +11,18 @@ const HRDashboardHome = () => {
 
   // top 5 most requested assets
   const { data: topAssets = []} = useQuery({
-    queryKey: ["topAssets"],
+    queryKey: ["topAssets", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get("/requests/topAssets");
+      const res = await axiosSecure.get(`/requests/${user?.email}/topAssets`);
       return res.data;
     },
   });
 
 // returnable vs. non-returnable assets
 const {data: returnableAssetCount = []} = useQuery({
-    queryKey: ['returnable'],
+    queryKey: ['returnable', user?.email],
     queryFn: async() => {
-        const res = await axiosSecure.get('/assets/returnableDistribution');
+        const res = await axiosSecure.get(`/assets/${user.email}/returnableDistribution`);
         return res.data
     }
 })  
@@ -37,8 +37,8 @@ const {data: returnableAssetCount = []} = useQuery({
   
   });
 
-  //total assets
-  const { data: assets = [] } = useQuery({
+  //total assets. ekhane backend theke result k object hisebe pathacchi(res.send({result})). Ejonno frontend a object hisebe pabo.
+  const { data: assetsObject = [] } = useQuery({
     queryKey: ["assets", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/assets?email=${user.email}`);
@@ -46,6 +46,9 @@ const {data: returnableAssetCount = []} = useQuery({
     },
     
   });
+  const assets = assetsObject?.result;
+//   console.log(assets);
+  
 
  return (
     <div className="p-6 space-y-8">
@@ -68,7 +71,7 @@ const {data: returnableAssetCount = []} = useQuery({
 
         <div className="bg-white shadow rounded-lg p-6 flex flex-col gap-2 items-center justify-center hover:-translate-y-2 transition-transform duration-200">
           <h2 className="text-2xl text-secondary font-semibold">Total Assets</h2>
-          <p className="text-3xl font-bold text-primary">{assets.length}</p>
+          <p className="text-3xl font-bold text-primary">{assets?.length}</p>
         </div>
 
 {/* pie chart */}

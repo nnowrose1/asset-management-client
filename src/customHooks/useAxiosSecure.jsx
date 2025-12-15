@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import useAuth from "./useAuth";
+import { Navigate } from "react-router";
 //import { useNavigate } from 'react-router';
 
 const axiosSecure = axios.create({
@@ -8,7 +9,7 @@ const axiosSecure = axios.create({
 });
 
 const useAxiosSecure = () => {
-  const { user, logOut } = useAuth() || {};
+  const { user, logOut, setUser } = useAuth() || {};
   // const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +37,8 @@ const useAxiosSecure = () => {
         if (statusCode === 401 || statusCode === 403) {
           logOut()
             .then(() => {
-              // navigate("/login");
+              setUser(null);
+              // <Navigate to={'/login'}></Navigate>
             })
             .catch((err) => {
               console.log(err);

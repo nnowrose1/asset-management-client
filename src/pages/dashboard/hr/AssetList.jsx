@@ -28,11 +28,11 @@ const AssetList = () => {
       return res.data;
     },
   });
-  //  console.log(assets);
+    // console.log(assets);
   
 
-  //  const allAssets = assets?.result || [];
-  const totalAssets = assets?.length || 0;
+    const allAssets = assets?.result || [];
+  const totalAssets = assets?.totalCount || 0;
   const totalPages = Math.ceil(totalAssets / limit);
   // console.log({totalAssets, totalPages});
   
@@ -45,7 +45,7 @@ const AssetList = () => {
     },
   });
 
-  const filteredAssets = assets.filter((asset) =>
+  const filteredAssets = allAssets.filter((asset) =>
     asset.productName.toLowerCase().includes(searchText.toLowerCase())
   );
 
