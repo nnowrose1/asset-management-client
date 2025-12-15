@@ -4,11 +4,13 @@ import Features from './Features';
 import HowItWorks from './HowItWorks';
 import Testimonials from './Testimonials';
 import Packages from './Packages';
+import Banner from './Banner';
 
 const Home = () => {
     return (
         <div>
             {/* <About></About> */}
+            <Banner></Banner>
 
             <Features></Features>
 
