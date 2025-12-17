@@ -23,10 +23,49 @@ const MyTeam = () => {
       const res = await axiosSecure.get(
         `/employees?companyName=${selectedCompany}`
       );
+
       return res.data;
     },
   });
-//   console.log(companies);
+  //  console.log(employees);
+
+  const { data: users = [] } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users`);
+      return res.data; // each user has dateOfBirth
+    },
+  });
+
+  const employeesWithDOB = employees.map((emp) => {
+    const user = users.find((u) => u.email === emp.employeeEmail);
+    return {
+      ...emp,
+      dateOfBirth: user?.dateOfBirth || null,
+    };
+  });
+
+  console.log(employeesWithDOB);
+
+  const getCurrentMonthBirthdays = (employees) => {
+    const currentMonth = new Date().getMonth();
+    const today = new Date().getDate();
+
+    return employees
+      .filter((emp) => emp.dateOfBirth)
+      .map((emp) => {
+        const dob = new Date(emp.dateOfBirth);
+        return {
+          ...emp,
+          birthDay: dob.getDate(),
+          birthMonth: dob.getMonth(),
+        };
+      })
+      .filter((emp) => emp.birthMonth === currentMonth)
+      .sort((a, b) => a.birthDay - b.birthDay);
+  };
+
+  const upcomingBirthdays = getCurrentMonthBirthdays(employeesWithDOB);
 
   return (
     <div className="px-6 py-6">
@@ -36,22 +75,25 @@ const MyTeam = () => {
 
       {/* Company Selector Tabs */}
       <div className="flex justify-center mb-6 space-x-4">
-        {
-          companies.length === 0 ? <h2 className="text-3xl font-semibold text-primary my-6 text-center">No Company Affiliation</h2> :
-        companies.map((company) => (
-         
-          <button
-            key={company}
-            className={`px-4 py-2 rounded-lg font-semibold ${
-              selectedCompany === company
-                ? "bg-primary text-white shadow-lg"
-                : "bg-gray-200 text-secondary hover:bg-gray-300"
-            }`}
-            onClick={() => setSelectedCompany(company)}
-          >
-            {company}
-          </button>
-        ))}
+        {companies.length === 0 ? (
+          <h2 className="text-3xl font-semibold text-primary my-6 text-center">
+            No Company Affiliation
+          </h2>
+        ) : (
+          companies.map((company) => (
+            <button
+              key={company}
+              className={`px-4 py-2 rounded-lg font-semibold ${
+                selectedCompany === company
+                  ? "bg-primary text-white shadow-lg"
+                  : "bg-gray-200 text-secondary hover:bg-gray-300"
+              }`}
+              onClick={() => setSelectedCompany(company)}
+            >
+              {company}
+            </button>
+          ))
+        )}
       </div>
 
       {/* Upcoming Birthdays
@@ -84,10 +126,52 @@ const MyTeam = () => {
             </div>
             <h4 className="font-semibold text-lg">{emp.employeeName}</h4>
 
-            <p className="text-accent text-sm truncate">Email: {emp.employeeEmail}</p>
+            <p className="text-accent text-sm truncate">
+              Email: {emp.employeeEmail}
+            </p>
           </div>
         ))}
       </div>
+
+      {/* upcoming Birthdays */}
+      {
+        selectedCompany && 
+        <div className="mt-10 bg-white rounded-xl shadow p-6">
+        <h3 className="text-xl font-semibold mb-4">
+          🎂 Upcoming Birthdays (This Month)
+        </h3>
+
+        {upcomingBirthdays.length === 0 ? (
+          <p className="text-accent">No birthdays this month</p>
+        ) : (
+          <ul className="space-y-3">
+            {upcomingBirthdays.map((emp) => (
+              <li
+                key={emp._id}
+                className="flex items-center gap-4 bg-gray-50 p-3 rounded-lg"
+              >
+                <img
+                  src={emp.employeeImage}
+                  alt={emp.employeeName}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+
+                <div className="flex-1">
+                  <p className="font-medium">{emp.employeeName}</p>
+                  {/* <p className="text-sm text-accent">{emp.position}</p> */}
+                </div>
+
+                <span className="text-sm font-semibold text-primary">
+                  {emp.birthDay}
+                  {new Date().toLocaleString("en-US", { month: "short" })}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      }
+      
     </div>
   );
 };

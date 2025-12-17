@@ -27,14 +27,26 @@ const About = () => {
 
   return (
     <section className="py-16 px-6 md:px-20">
-      <h2 className="text-3xl md:text-4xl font-bold text-secondary text-center mb-4">
-        About AssetNexus
-      </h2>
-      <p className="text-accent text-center max-w-2xl mx-auto mb-12">
-        AssetNexus is a modern B2B platform designed to help companies simplify
-        their HR and asset management workflows. From onboarding to asset
-        allocation—everything stays organized, secure, and transparent.
-      </p>
+      <div
+        className="relative bg-cover bg-center py-16 px-4 min-h-[50vh]"
+        style={{
+          backgroundImage: "url('/slide1.jpg')",
+        }}
+      >
+        {/* <div className="absolute inset-0 bg-black/60"></div> */}
+          <div className="relative z-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-4">
+              About AssetNexus
+            </h2>
+            <p className="text-accent text-center max-w-2xl mx-auto mb-12">
+              AssetNexus is a modern B2B platform designed to help companies
+              simplify their HR and asset management workflows. From onboarding
+              to asset allocation—everything stays organized, secure, and
+              transparent.
+            </p>
+          </div>
+        
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {features.map((item, index) => (

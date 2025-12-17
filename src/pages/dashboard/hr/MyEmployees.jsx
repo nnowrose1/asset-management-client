@@ -37,6 +37,7 @@ const MyEmployees = () => {
   });
 
   const handleRemove = (employee) => {
+    
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",

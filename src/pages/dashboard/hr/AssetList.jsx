@@ -31,22 +31,25 @@ const AssetList = () => {
     // console.log(assets);
   
 
-    const allAssets = assets?.result || [];
+  const allAssets = Array.isArray(assets?.result) ? assets.result : [];
   const totalAssets = assets?.totalCount || 0;
   const totalPages = Math.ceil(totalAssets / limit);
   // console.log({totalAssets, totalPages});
   
 
   const { data: employees = [] } = useQuery({
-    queryKey: ["employees", user.email],
+    queryKey: ["employees", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/employees?email=${user.email}`);
+      const res = await axiosSecure.get(`/employees?email=${user?.email}`);
       return res.data;
     },
   });
 
+  // console.log(allAssets);
+  
+
   const filteredAssets = allAssets.filter((asset) =>
-    asset.productName.toLowerCase().includes(searchText.toLowerCase())
+    asset?.productName?.toLowerCase().includes(searchText.toLowerCase())
   );
 
   const openAssignModal = (asset) => {
