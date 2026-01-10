@@ -28,12 +28,9 @@ Ensure security by giving HR, employees, and admins access only to relevant sect
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/nnowrose1/asset-management-system/main/assetNexus1.png" width="80%" />
-  <img src="https://raw.githubusercontent.com/nnowrose1/asset-management-system/main/assetNexus2.png" width="80%" />
+  <img src="assetNexus1.png" width="45%" />
+  <img src="assetNexus2.png" width="45%" />
 </p>
-![Home Page](/home.png)
-![Dashboard](/dashboard.png)
-
 
 ## Technical Highlights
 
