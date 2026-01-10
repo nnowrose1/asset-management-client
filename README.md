@@ -28,8 +28,8 @@ Ensure security by giving HR, employees, and admins access only to relevant sect
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="assetNexus1.png" width="45%" />
-  <img src="assetNexus2.png" width="45%" />
+  <img src="assetNexus3.png" width="45%" />
+  <img src="assetNexus4.png" width="45%" />
 </p>
 
 ## Technical Highlights
