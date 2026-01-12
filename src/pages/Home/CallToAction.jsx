@@ -13,7 +13,7 @@ const CallToAction = () => {
       </p>
 
       <Link
-        to="/employeeRegister"
+        to="/login"
         className="inline-block bg-white text-primary px-8 py-3 rounded-xl font-semibold hover:bg-gray-100 transition"
       >
         Get Started for Free

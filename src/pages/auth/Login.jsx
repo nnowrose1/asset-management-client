@@ -62,7 +62,7 @@ const Login = () => {
               {...register("email", { required: true })}
               type="email"
               placeholder="Email"
-              className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
+              className="border border-gray-300 dark:text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
             />
             {errors.email && (
               <p className="text-red-600 text-sm">Email is required</p>
@@ -78,7 +78,7 @@ const Login = () => {
               {...register("password", { required: true, minLength: 6 })}
               type="password"
               placeholder="******"
-              className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
+              className="border border-gray-300 dark:text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
             />
             {errors.password && (
               <p className="text-red-600 text-sm">
@@ -107,7 +107,7 @@ const Login = () => {
           <button
             type="button"
             onClick={handleDemoLogin}
-            className="w-full bg-gray-200 text-gray-800 py-2 rounded-md hover:bg-gray-300 transition"
+            className="w-full bg-primary mt-3 text-white py-2 rounded-md hover:bg-blue-700 transition"
           >
             Demo Login
           </button>
