@@ -62,7 +62,7 @@ const Footer = () => {
 
       {/* Bottom Copyright */}
       <div className="text-center bg-gray-900 py-6 text-sm text-gray-400 mt-10 border-t border-gray-700 ">
-        © {new Date().getFullYear()} AssetVerse — All rights reserved.
+        © {new Date().getFullYear()} AssetNexus — All rights reserved.
       </div>
 
     </footer>

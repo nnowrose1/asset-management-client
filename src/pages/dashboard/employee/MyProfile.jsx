@@ -63,9 +63,7 @@ const MyProfile = () => {
           });
            return;
     } 
-    
-  
-   
+
     if (profileImg) {
       formData.append("image", profileImg);
     }

@@ -64,7 +64,7 @@ const AddAsset = () => {
             {...register("productName", {
               required: "Product name is required",
             })}
-            className="w-full mt-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full mt-1 p-3 rounded-lg border dark:text-primary border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
             placeholder="Enter product name"
           />
           {errors.productName && (
@@ -80,7 +80,7 @@ const AddAsset = () => {
           <input
             type="file"
             {...register("productImage", { required: true })}
-            className="file-input"
+            className="file-input dark:text-primary"
             placeholder="Upload Product Image"
           />
           {errors.productImage?.type === "required" && (
@@ -93,7 +93,7 @@ const AddAsset = () => {
           <label className="font-medium text-secondary">Product Type</label>
           <select
             {...register("productType", { required: true })}
-            className="w-full mt-1 p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary"
+            className="w-full mt-1 p-3 rounded-lg border dark:text-primary border-gray-300 focus:ring-2 focus:ring-primary"
           >
             <option value="">Select type</option>
             <option value="Returnable">Returnable</option>
@@ -113,7 +113,7 @@ const AddAsset = () => {
               required: "Quantity is required",
               min: { value: 1, message: "Minimum quantity is 1" },
             })}
-            className="w-full mt-1 p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary"
+            className="w-full mt-1 p-3 rounded-lg border dark:text-primary border-gray-300 focus:ring-2 focus:ring-primary"
             placeholder="Enter quantity"
           />
           {errors.productQuantity && (

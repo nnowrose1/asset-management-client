@@ -26,6 +26,10 @@ const RequestAsset = () => {
   // console.log(assets);
   
   const openSendReqModal = (asset) => {
+      if(user.email === "demo@assetnexus.com") {
+    toast.error("Demo user cannot request assets.");
+    return;
+  }
     reqModalRef.current.showModal();
     setSelectedAsset(asset)
   }
@@ -61,6 +65,14 @@ const RequestAsset = () => {
       })
       .catch((err) => {
         console.log(err);
+          // check if backend returned demo user error
+          console.log(err.response?.data?.message);
+          
+      if (err.response?.data?.message == "Demo user cannot perform this action") {
+        toast.error("Demo user cannot request assets.");
+      } else {
+        toast.error("Failed to request asset. Try again.");
+      }
       });
    
   };

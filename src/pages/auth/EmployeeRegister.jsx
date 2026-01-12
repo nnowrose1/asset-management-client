@@ -78,14 +78,14 @@ const EmployeeRegister = () => {
         >
           {/* FULL NAME */}
           <div className="flex flex-col space-y-1">
-            <label className="font-medium text-secondary flex items-center gap-2">
+            <label className="font-medium text-secondary  flex items-center gap-2">
               <FaUser /> Full Name
             </label>
             <input
               {...register("name", { required: true })}
               type="text"
               placeholder="Your Name"
-              className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
+              className="border border-gray-300 dark:text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary focus:outline-none"
             />
             {errors.name && (
               <p className="text-red-600 text-sm">Full name is required</p>
@@ -101,7 +101,7 @@ const EmployeeRegister = () => {
               {...register("photo", { required: true })}
               type="text"
               placeholder="Photo URL"
-              className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
+              className="border border-gray-300 dark:text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
             />
             {errors.photo && (
               <p className="text-red-600 text-sm">Your Photo is required</p>
@@ -117,7 +117,7 @@ const EmployeeRegister = () => {
               {...register("email", { required: true })}
               type="email"
               placeholder="Email"
-              className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
+              className="border border-gray-300 dark:text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
             />
             {errors.email && (
               <p className="text-red-600 text-sm">Email is required</p>
@@ -133,7 +133,7 @@ const EmployeeRegister = () => {
               {...register("password", { required: true, minLength: 6 })}
               type="password"
               placeholder="Password"
-              className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
+              className="border border-gray-300 dark:text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
             />
             {errors.password && (
               <p className="text-red-600 text-sm">
@@ -150,7 +150,7 @@ const EmployeeRegister = () => {
             <input
               {...register("dateOfBirth", { required: true })}
               type="date"
-              className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
+              className="border border-gray-300 dark:bg-gray-300 dark:text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
             />
             {errors.dateOfBirth && (
               <p className="text-red-600 text-sm">Date of birth is required</p>

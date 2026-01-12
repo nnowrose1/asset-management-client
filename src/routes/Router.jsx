@@ -23,6 +23,7 @@ import PaymentSuccess from "../pages/dashboard/payment/PaymentSuccess";
 import PaymentCancelled from "../pages/dashboard/payment/PaymentCancelled";
 import PaymentHistory from "../pages/dashboard/payment/PaymentHistory";
 import HRDashboardHome from "../pages/dashboard/hr/hrDashboardHome";
+import ContactUs from "../pages/Home/ContactUs";
 
 
 export const router = createBrowserRouter([
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: "/about",
         Component: AboutUs,
+      },
+       {
+        path: "/contact",
+        Component: ContactUs,
       },
       {
         path: "/login",

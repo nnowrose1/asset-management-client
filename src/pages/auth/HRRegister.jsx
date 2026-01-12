@@ -114,7 +114,7 @@ const HRRegister = () => {
               {...register("name", { required: true })}
               type="text"
               placeholder="Your Name"
-              className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
+              className="border border-gray-300 dark:text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
             />
             {errors.name && (
               <p className="text-red-600 text-sm">Full name is required</p>
@@ -130,7 +130,7 @@ const HRRegister = () => {
               {...register("companyName", { required: true })}
               type="text"
               placeholder="Company Name"
-              className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
+              className="border border-gray-300 dark:text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
             />
             {errors.companyName && (
               <p className="text-red-600 text-sm">Company name is required</p>
@@ -143,7 +143,7 @@ const HRRegister = () => {
           <input
             type="file"
             {...register("companyLogo", { required: true })}
-            className="file-input"
+            className="file-input dark:text-primary"
             placeholder="Upload Company Logo"
           />
           {errors.companyLogo?.type === "required" && (
@@ -161,7 +161,7 @@ const HRRegister = () => {
               {...register("email", { required: true })}
               type="email"
               placeholder="Email"
-              className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
+              className="border border-gray-300 dark:text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
             />
             {errors.email && (
               <p className="text-red-600 text-sm">Email is required</p>
@@ -177,7 +177,7 @@ const HRRegister = () => {
               {...register("password", { required: true, minLength: 6 })}
               type="password"
               placeholder="Password"
-              className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
+              className="border border-gray-300 dark:text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
             />
             {errors.password && (
               <p className="text-red-600 text-sm">
@@ -194,7 +194,7 @@ const HRRegister = () => {
             <input
               {...register("dateOfBirth", { required: true })}
               type="date"
-              className="border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
+              className="border border-gray-300 dark:bg-gray-300 dark:text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary outline-none"
             />
             {errors.dateOfBirth && (
               <p className="text-red-600 text-sm">Date of birth is required</p>

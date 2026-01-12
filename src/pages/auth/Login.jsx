@@ -10,6 +10,7 @@ const Login = () => {
     register,
     reset,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
   const location = useLocation();
@@ -27,6 +28,21 @@ const Login = () => {
       .catch((err) => {
         toast.error(err.message);
       });
+  };
+
+  // --- Demo Login Handler ---
+  const handleDemoLogin = () => {
+    const demoCredentials = {
+      email: "demo@assetnexus.com",
+      password: "demo1234",
+    };
+
+    // Auto-fill the form
+    setValue("email", demoCredentials.email);
+    setValue("password", demoCredentials.password);
+
+    // Automatically submit the form
+    handleSubmit(handleLogin)();
   };
   return (
     <div className="min-h-screen flex items-center justify-center  px-4">
@@ -86,6 +102,16 @@ const Login = () => {
             Login
           </button>
         </form>
+
+         {/* DEMO LOGIN BUTTON */}
+          <button
+            type="button"
+            onClick={handleDemoLogin}
+            className="w-full bg-gray-200 text-gray-800 py-2 rounded-md hover:bg-gray-300 transition"
+          >
+            Demo Login
+          </button>
+        
 
         {/* Sign Up */}
         <p className="text-center text-accent text-sm mt-4">

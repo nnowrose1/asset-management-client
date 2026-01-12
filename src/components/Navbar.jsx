@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Link, NavLink, useNavigate } from "react-router";
 
@@ -15,6 +15,17 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const [hover, setHover] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    const html = document.querySelector("html");
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const handleTheme = (checked) => {
+    setTheme(checked ? "dark" : "light");
+  };
 
   const handleLogout = () => {
     logOut()
@@ -33,6 +44,9 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink to="/about">About Us</NavLink>
+      </li>
+      <li>
+        <NavLink to="/contact">Contact Us</NavLink>
       </li>
       <li>
         <NavLink to="/employeeRegister">Join as Employee</NavLink>
@@ -208,6 +222,18 @@ const Navbar = () => {
             Login
           </Link>
         )}
+
+
+          {/* theme */}
+
+        <input
+          onChange={(e) => handleTheme(e.target.checked)}
+          type="checkbox"
+          defaultChecked={localStorage.getItem("theme") === "dark"}
+          className="toggle ml-2 bg-primary"
+        />
+
+
       </div>
     </nav>
   );

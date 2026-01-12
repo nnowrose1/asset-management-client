@@ -36,7 +36,7 @@ const MyAssets = () => {
    const totalAssets = allAssets?.length || 0;
   const totalPages = Math.ceil(totalAssets / limit);
 
-  //   filter based on search and filter
+  //filter based on search and filter
   const filteredAssets = allAssets
     .filter((asset) =>
       asset.assetName.toLowerCase().includes(searchText.toLowerCase())
