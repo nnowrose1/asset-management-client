@@ -25,6 +25,13 @@ Provides HR and employees with a clear overview of resources, allocations, and u
 Role-Based Access Control:
 Ensure security by giving HR, employees, and admins access only to relevant sections of the platform. 
 
+## 📸 Screenshots
+
+<p align="center">
+  <img src="assetNexus3.png" width="45%" />
+  <img src="assetNexus4.png" width="45%" />
+</p>
+
 ## Technical Highlights
 
 - **Frontend:**
